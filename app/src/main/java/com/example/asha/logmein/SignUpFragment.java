@@ -78,9 +78,9 @@ public class SignUpFragment extends Fragment {
                     // Toast informs the users that account is created successfully
                     Toast.makeText(getActivity(),"Account Created successfully"
                             ,Toast.LENGTH_SHORT).show();
-                    /*Intent intent = new Intent(getActivity(), WelcomeActivity.class);
-                    intent.putExtra("id", 1);
-                    startActivity(intent);*/
+                    Intent intent = new Intent(getActivity(), WelcomeActivity.class);
+                    intent.putExtra("Email",sEmail);
+                    startActivity(intent);
 
                 }
             }

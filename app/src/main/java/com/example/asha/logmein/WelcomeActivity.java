@@ -12,7 +12,6 @@ public class WelcomeActivity extends AppCompatActivity {
 
     boolean mPressedOnce = false;
     DatabaseHelper helper;
-    String name;
     String Email;
     Cursor c;
     String dName, dEmail,dContact;
@@ -29,19 +28,21 @@ public class WelcomeActivity extends AppCompatActivity {
             Email = bundle.getString("Email");
         }
 
+        //Creating a new databaseHelper object
+        helper = new DatabaseHelper(this);
 
-       /* Cursor c = helper.getDisplayDetails(Email);
-        String dName = c.getString(0);
-        String dEmail = c.getString(1);
-        String dContact = c.getString(2);*/
+        //Fetching user name from table
+        dName = helper.getUserName(Email);
+        //Fetching Contact number from Table
+        dContact = helper.getUserContact(Email);
+
         // Update the UI views with the latest data after changes
         tv_name = findViewById(R.id.display_name);
         tv_email = findViewById(R.id.display_email);
         tv_contactNum = findViewById(R.id.display_contact_num);
 
-        /*tv_name.setText(dName);
-        tv_email.setText(dEmail);
-        tv_contactNum.setText(dContact);*/
+        tv_name.setText(dName);
+        tv_contactNum.setText(dContact);
         tv_email.setText(Email);
 
     }

@@ -50,8 +50,8 @@ public class LoginFragment extends Fragment {
         login_password = view.findViewById(R.id.login_password);
 
         // setting EditText border colour to Red to indicate error
-        login_email.setBackgroundResource(R.drawable.edittext_bg_red);
-        login_password.setBackgroundResource(R.drawable.edittext_bg_red);
+        login_email.setBackgroundResource(R.drawable.edittext_bg);
+        login_password.setBackgroundResource(R.drawable.edittext_bg);
 
         // Executed on clicking Login Button
         Login_btn.setOnClickListener(new View.OnClickListener() {
@@ -66,10 +66,6 @@ public class LoginFragment extends Fragment {
                 String sPassword = helper.searchPass(email);
                 if(password.equals(sPassword))
                 {
-                    // setting EditText border colour to black
-                    login_email.setBackgroundResource(R.drawable.edittext_bg);
-                    login_password.setBackgroundResource(R.drawable.edittext_bg);
-
                     // Intent to launch Welcome screen
                     Intent intent = new Intent(getActivity(), WelcomeActivity.class);
                     intent.putExtra("Email",email);
@@ -77,6 +73,9 @@ public class LoginFragment extends Fragment {
                 }
                 else
                 {
+                    // setting EditText border colour to black
+                    login_email.setBackgroundResource(R.drawable.edittext_bg_red);
+                    login_password.setBackgroundResource(R.drawable.edittext_bg_red);
                     Toast.makeText(getActivity(), R.string.login_failed, Toast.LENGTH_SHORT).show();
                 }
             }

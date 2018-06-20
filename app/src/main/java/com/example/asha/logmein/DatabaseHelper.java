@@ -41,6 +41,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         this.onCreate(db);
     }
 
+    //used to insert user data into the table
     public void insertContact(Contacts c) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -64,7 +65,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    // Used to check if the given Email is present in the Table
+    // Used to check if the given Email is present in the Table.
     public String searchEmail(String email)
     {
         db = this.getReadableDatabase();
@@ -114,11 +115,50 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return Password;
     }
 
-    public Cursor getDisplayDetails(String email) {
-
+    public String getUserContact(String email)
+    {
         db = this.getReadableDatabase();
-        Cursor cursor = this.db.query(TABLE_NAME, new String[]{"name","email","contact"},null,null,null,null,null);
-        return  cursor;
+        String query = "SELECT email, contact from " + TABLE_NAME;
+        Cursor cursor = db.rawQuery(query, null);
+        String Email, Contact = "";
+        if(cursor.moveToFirst())
+        {
+            do{
+                Email  = cursor.getString(0);
+                if(Email.equals(email))
+                {
+                    Contact = cursor.getString(1);
+                    break;
+                }
+            }
+            while (cursor.moveToNext());
+        }
+        db.close();
+        cursor.close();
+        return Contact;
+    }
 
+    public String getUserName(String email)
+    {
+        db = this.getReadableDatabase();
+        String query = "SELECT email, name from " + TABLE_NAME;
+        Cursor cursor = db.rawQuery(query, null);
+        String Email, Name;
+        Name = "";
+        if(cursor.moveToFirst())
+        {
+            do{
+                Email  = cursor.getString(0);
+                if(Email.equals(email))
+                {
+                    Name = cursor.getString(1);
+                    break;
+                }
+            }
+            while (cursor.moveToNext());
+        }
+        db.close();
+        cursor.close();
+        return Name;
     }
 }

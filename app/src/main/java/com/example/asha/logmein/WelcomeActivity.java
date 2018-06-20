@@ -13,6 +13,7 @@ public class WelcomeActivity extends AppCompatActivity {
     boolean mPressedOnce = false;
     DatabaseHelper helper;
     String name;
+    String Email;
     Cursor c;
     String dName, dEmail,dContact;
     TextView tv_name, tv_email, tv_contactNum;
@@ -23,16 +24,20 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_welcome);
 
         Bundle bundle = getIntent().getExtras();
-        final String Email = bundle.getString("Email");
+        if (bundle != null)
+        {
+            Email = bundle.getString("Email");
+        }
+
 
        /* Cursor c = helper.getDisplayDetails(Email);
         String dName = c.getString(0);
         String dEmail = c.getString(1);
         String dContact = c.getString(2);*/
         // Update the UI views with the latest data after changes
-        tv_name= (TextView)findViewById(R.id.display_name);
-        tv_email= (TextView)findViewById(R.id.display_email);
-        tv_contactNum= (TextView)findViewById(R.id.display_contact_num);
+        tv_name = findViewById(R.id.display_name);
+        tv_email = findViewById(R.id.display_email);
+        tv_contactNum = findViewById(R.id.display_contact_num);
 
         /*tv_name.setText(dName);
         tv_email.setText(dEmail);
@@ -48,7 +53,7 @@ public class WelcomeActivity extends AppCompatActivity {
             super.onBackPressed();
         }
         this.mPressedOnce = true;
-        Toast.makeText(this, "Press BACK again to exit", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Press again to exit", Toast.LENGTH_SHORT).show();
 
         new Handler().postDelayed(new Runnable() {
 

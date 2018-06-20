@@ -42,7 +42,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void insertContact(Contacts c) {
-        db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
         // To get the count of contact that are present in Table, which gives the
@@ -60,9 +60,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         //Inserting the Contacts object into database
         db.insert(TABLE_NAME, null , values);
+        cursor.close();
         db.close();
     }
 
+    // Used to check if the given Email is present in the Table
+    public String searchEmail(String email)
+    {
+        db = this.getReadableDatabase();
+        String query = "SELECT email from " + TABLE_NAME;
+        Cursor cursor = db.rawQuery(query, null);
+        String Email, EmailStatus;
+        EmailStatus = "Not Found";
+        if(cursor.moveToFirst())
+        {
+            do{
+                Email  = cursor.getString(0);
+                if(Email.equals(email))
+                {
+                    EmailStatus = "Found";
+                    break;
+                }
+            }
+            while (cursor.moveToNext());
+        }
+        db.close();
+        cursor.close();
+        return EmailStatus;
+    }
+
+    //Used to check if the password entered for the given Email is valid or not
     public String searchPass(String email)
     {
         db = this.getReadableDatabase();
@@ -82,6 +109,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
             while (cursor.moveToNext());
         }
+        db.close();
+        cursor.close();
         return Password;
     }
 

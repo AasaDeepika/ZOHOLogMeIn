@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +17,8 @@ import android.widget.Toast;
 public class LoginFragment extends Fragment {
 
 
-    DatabaseHelper helper = new DatabaseHelper(getActivity());
+    DatabaseHelper helper;
+    Context context;
     EditText login_email, login_password;
     Button Login_btn;
     String email, password;
@@ -36,14 +38,20 @@ public class LoginFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_login, container, false);
 
-        Login_btn = (Button)view.findViewById(R.id.login_button);
-        login_email = (EditText)view.findViewById(R.id.login_email);
-        login_password = (EditText)view.findViewById(R.id.login_password);
+        context = this.getActivity();
+        helper = new DatabaseHelper(context);
 
+        Login_btn = view.findViewById(R.id.login_button);
+        login_email = view.findViewById(R.id.login_email);
+        login_password = view.findViewById(R.id.login_password);
+
+        // setting EditText border colour to Red to indicate error
+        login_email.setBackgroundResource(R.drawable.edittext_bg_red);
+        login_password.setBackgroundResource(R.drawable.edittext_bg_red);
 
         // Executed on clicking Login Button
         Login_btn.setOnClickListener(new View.OnClickListener() {
@@ -58,6 +66,11 @@ public class LoginFragment extends Fragment {
                 String sPassword = helper.searchPass(email);
                 if(password.equals(sPassword))
                 {
+                    // setting EditText border colour to black
+                    login_email.setBackgroundResource(R.drawable.edittext_bg);
+                    login_password.setBackgroundResource(R.drawable.edittext_bg);
+
+                    // Intent to launch Welcome screen
                     Intent intent = new Intent(getActivity(), WelcomeActivity.class);
                     intent.putExtra("Email",email);
                     startActivity(intent);

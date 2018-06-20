@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 public class ValidateUserSignupInfo {
 
+    DatabaseHelper helper;
     String sName, sEmail, sPassword, sContact;
     private EditText Enter_Name, Enter_Email, Enter_Password, Enter_ContactNum;
     private int flagn = 0, flage = 0, flagp = 0, flagc = 0, flag = 0;
@@ -28,6 +29,7 @@ public class ValidateUserSignupInfo {
 
 
 
+        helper = new DatabaseHelper(context);
 
          patPassword = Pattern.compile(regex);
          patEmail = Pattern.compile(emailRegex);
@@ -41,10 +43,10 @@ public class ValidateUserSignupInfo {
         contactId = view.getResources().getIdentifier("new_contact_num","id",context.getPackageName());
 
 
-        Enter_Name = (EditText) view.findViewById(nameId);
-        Enter_Email = (EditText) view.findViewById(emailId);
-        Enter_Password = (EditText) view.findViewById(passwordId);
-        Enter_ContactNum = (EditText)view.findViewById(contactId);
+        Enter_Name =  view.findViewById(nameId);
+        Enter_Email =  view.findViewById(emailId);
+        Enter_Password = view.findViewById(passwordId);
+        Enter_ContactNum = view.findViewById(contactId);
 
 
 
@@ -135,6 +137,13 @@ public class ValidateUserSignupInfo {
         else if(!patEmail.matcher(sEmail).matches())
         {
             Enter_Email.setError("Enter valid email address");
+            Enter_Email.setBackgroundResource(R.drawable.edittext_bg_red);
+            flage = 1;
+        }
+        else if(helper.searchEmail(sEmail).equalsIgnoreCase("Found"))
+        {
+            //Email already exists in the Table
+            Enter_Email.setError("Account already exists for this Email. Enter new email address");
             Enter_Email.setBackgroundResource(R.drawable.edittext_bg_red);
             flage = 1;
         }

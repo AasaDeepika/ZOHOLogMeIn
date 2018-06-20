@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +16,7 @@ import android.widget.Toast;
 
 public class SignUpFragment extends Fragment {
 
-    DatabaseHelper helper = new DatabaseHelper(getActivity());
+    DatabaseHelper helper;
     EditText Enter_Name, Enter_Email, Enter_Password, Enter_ContactNum;
     String sName, sEmail, sPassword, sContact;
     ValidateUserSignupInfo uValidate = new ValidateUserSignupInfo();
@@ -36,24 +37,23 @@ public class SignUpFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_sign_up, container, false);
-        context = this.getContext();
+        context = this.getActivity();
+        helper = new DatabaseHelper(context);
+
+        Enter_Name = view.findViewById(R.id.new_name);
+        Enter_Email = view.findViewById(R.id.new_email);
+        Enter_Password = view.findViewById(R.id.new_password);
+        Enter_ContactNum = view.findViewById(R.id.new_contact_num);
 
 
-
-
-        Signup_button = (Button) view.findViewById(R.id.signup_button);
+        Signup_button =  view.findViewById(R.id.signup_button);
 
         // Executed on clicking SignUp button
         Signup_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
-                Enter_Name = (EditText)view.findViewById(R.id.new_name);
-                Enter_Email = (EditText)view.findViewById(R.id.new_email);
-                Enter_Password = (EditText)view.findViewById(R.id.new_password);
-                Enter_ContactNum = (EditText)view.findViewById(R.id.new_contact_num);
 
                 result = uValidate.validate(view, context);
 

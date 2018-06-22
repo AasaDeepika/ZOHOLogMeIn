@@ -11,7 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+import static com.example.asha.logmein.GlobalClass.Email;
 
 
 public class LoginFragment extends Fragment {
@@ -23,6 +25,7 @@ public class LoginFragment extends Fragment {
     Button Login_btn;
     String email, password;
     Intent intent;
+    TextView Forgot_Password;
 
     private OnFragmentInteractionListener mListener;
 
@@ -48,38 +51,51 @@ public class LoginFragment extends Fragment {
         Login_btn = view.findViewById(R.id.login_button);
         login_email = view.findViewById(R.id.login_email);
         login_password = view.findViewById(R.id.login_password);
+        Forgot_Password = view.findViewById(R.id.forgot_password);
 
-        // setting EditText border colour to Red to indicate error
-        login_email.setBackgroundResource(R.drawable.edittext_bg);
-        login_password.setBackgroundResource(R.drawable.edittext_bg);
 
         // Executed on clicking Login Button
         Login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                email = login_email.getText().toString();
+                Email = login_email.getText().toString();
                 password = login_password.getText().toString();
 
                 // searchPass is a DatabaseHelper method to get password for a given -
                 // email address(if exists) from the SQLite contacts table
-                String sPassword = helper.searchPass(email);
+                String sPassword = helper.searchPass(Email);
                 if(password.equals(sPassword))
                 {
+                    // setting EditText border colour to black
+                    login_email.setBackgroundResource(R.drawable.edittext_bg);
+                    login_password.setBackgroundResource(R.drawable.edittext_bg);
+
                     // Intent to launch Welcome screen
                     Intent intent = new Intent(getActivity(), WelcomeActivity.class);
-                    intent.putExtra("Email",email);
                     startActivity(intent);
                 }
                 else
                 {
-                    // setting EditText border colour to black
+                    // setting EditText border colour to Red to indicate error
                     login_email.setBackgroundResource(R.drawable.edittext_bg_red);
                     login_password.setBackgroundResource(R.drawable.edittext_bg_red);
                     Toast.makeText(getActivity(), R.string.login_failed, Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
+
+        //Executes when forgot password is clicked.
+        Forgot_Password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+
+            }
+        });
+
 
         return view;
     }

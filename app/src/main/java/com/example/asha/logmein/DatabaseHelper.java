@@ -5,29 +5,40 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
+    //
     private static final int DB_VERION =1;
+
+    //String variables that hold the database name and table name
     private static final String DB_NAME = "contacts.db";
     private static final String TABLE_NAME = "contacts";
+
+    //String variables that hold the column names
     private static final String COLUMN_ID = "id";
     private static final String COLUMN_NAME = "name";
     private static final String COLUMN_EMAIL = "email";
     private static final String COLUMN_PASSWORD = "password";
     private static final String COLUMN_CONTACT_NUM = "contact";
+
+    //SQLiteDatabase object
     SQLiteDatabase db;
 
+    //Query to create table
     private static final String TABLE_CREATE = "CREATE TABLE " + TABLE_NAME + "(" + COLUMN_ID +
             " integer primary key not null , " + COLUMN_NAME + " text not null, " +
             COLUMN_EMAIL + " text not null,"+ COLUMN_PASSWORD + " text not null," +
             COLUMN_CONTACT_NUM + " text not null);";
 
+    //Constructor for the class
     public DatabaseHelper(Context context)
     {
         super(context, DB_NAME, null, DB_VERION);
     }
 
+    //Creates the users table
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(TABLE_CREATE);
@@ -115,6 +126,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return Password;
     }
 
+    //Used to return the Contact number of the giver email
     public String getUserContact(String email)
     {
         db = this.getReadableDatabase();
@@ -138,6 +150,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return Contact;
     }
 
+    //Used to return the User name of the giver email
     public String getUserName(String email)
     {
         db = this.getReadableDatabase();
@@ -160,5 +173,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         cursor.close();
         return Name;
+    }
+
+    //Delete user with the given email from the table
+    public void deleteUser(String email) {
+        db = this.getWritableDatabase();
+        //query to delete user with the given email
+        db.execSQL("DELETE FROM " + TABLE_NAME + " WHERE email = '"+ email + "'");
+
+        db.close();
+    }
+
+    //Delete user with the given email from the table
+    public void UpdateUserDetails(String sName, String sPassword, String sContact, String email) {
+        db = this.getWritableDatabase();
+        //query to delete user with the given email
+        db.execSQL("UPDATE " + TABLE_NAME + " SET name = '"+ sName + "', password = '"+ sPassword +
+        "', contact = '" + sContact + "' WHERE email = '" + email+"'");
+        db.close();
     }
 }

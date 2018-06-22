@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">LogMeIn</string>
+    <string name="app_name">Log Me In</string>
 
     <string name="title_bar_name">Log Me In</string>
 
@@ -39,6 +39,17 @@
 
     <!-- User Details page -->
     <string name="welcome">WELCOME</string>
+    <string name="home_screen">Home</string>
+    <string name="edit_profile_screen">Edit profile</string>
+    <string name="delete_account_screen">Delete account</string>
+    <string name="sign_out">Sign out</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="update">Update</string>
+    <string name="update_details">Enter new details</string>
+    <string name="confirmation">Confirmation!</string>
+    <string name="enter_password_delete">Enter Password</string>
 
 
 </resources>

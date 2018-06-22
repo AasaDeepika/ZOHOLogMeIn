@@ -25,42 +25,73 @@ public class ValidateUserSignupInfo {
 
     }
 
-    public boolean validate(View view, Context context) {
-
+    public boolean validate(View view, Context context, String Source) {
 
 
         helper = new DatabaseHelper(context);
 
-         patPassword = Pattern.compile(regex);
-         patEmail = Pattern.compile(emailRegex);
+        patPassword = Pattern.compile(regex);
+        patEmail = Pattern.compile(emailRegex);
 
-        // Using getIdentifier(), we are obtaining the id of the Edit text so that they can be
-        // edited from here. NOTE: the name of the id is hardcoded below as we have to evaluate
-        // only for four edit texts.
-        nameId = view.getResources().getIdentifier("new_name","id",context.getPackageName());
-        emailId = view.getResources().getIdentifier("new_email","id",context.getPackageName());
-        passwordId = view.getResources().getIdentifier("new_password","id",context.getPackageName());
-        contactId = view.getResources().getIdentifier("new_contact_num","id",context.getPackageName());
-
-
-        Enter_Name =  view.findViewById(nameId);
-        Enter_Email =  view.findViewById(emailId);
-        Enter_Password = view.findViewById(passwordId);
-        Enter_ContactNum = view.findViewById(contactId);
+        //Validate for Signup (Name, email, password, contact num)
+        if(Source.equalsIgnoreCase("Signup"))
+        {
+            // Using getIdentifier(), we are obtaining the id of the Edit text so that they can be
+            // edited from here. NOTE: the name of the id is hardcoded below as we have to evaluate
+            // only for four edit texts.
+            nameId = view.getResources().getIdentifier("new_name","id",context.getPackageName());
+            emailId = view.getResources().getIdentifier("new_email","id",context.getPackageName());
+            passwordId = view.getResources().getIdentifier("new_password","id",context.getPackageName());
+            contactId = view.getResources().getIdentifier("new_contact_num","id",context.getPackageName());
 
 
+            Enter_Name =  view.findViewById(nameId);
+            Enter_Email =  view.findViewById(emailId);
+            Enter_Password = view.findViewById(passwordId);
+            Enter_ContactNum = view.findViewById(contactId);
 
-        // Getting the text entered in the fields
-        sName = Enter_Name.getText().toString();
-        sEmail = Enter_Email.getText().toString();
-        sPassword = Enter_Password.getText().toString();
-        sContact = Enter_ContactNum.getText().toString();
 
-        // Following four functions will evaluate the fields accordingly
-        validateUserName(sName);
-        validateUserEmail(sEmail);
-        validateUserPassword(sPassword);
-        validateUserContactNum(sContact);
+
+            // Getting the text entered in the fields
+            sName = Enter_Name.getText().toString();
+            sEmail = Enter_Email.getText().toString();
+            sPassword = Enter_Password.getText().toString();
+            sContact = Enter_ContactNum.getText().toString();
+
+            // Following four functions will evaluate the fields accordingly
+            validateUserName(sName);
+            validateUserEmail(sEmail);
+            validateUserPassword(sPassword);
+            validateUserContactNum(sContact);
+        }
+        //Validate for Update details (Name, password, contact num)
+        else if(Source.equalsIgnoreCase("Update"))
+        {
+
+            // Using getIdentifier(), we are obtaining the id of the Edit text so that they can be
+            // edited from here. NOTE: the name of the id is hardcoded below as we have to evaluate
+            // only for four edit texts.
+            nameId = view.getResources().getIdentifier("new_name","id",context.getPackageName());
+            passwordId = view.getResources().getIdentifier("new_password","id",context.getPackageName());
+            contactId = view.getResources().getIdentifier("new_contact_num","id",context.getPackageName());
+
+
+            Enter_Name =  view.findViewById(nameId);
+            Enter_Password = view.findViewById(passwordId);
+            Enter_ContactNum = view.findViewById(contactId);
+
+
+
+            // Getting the text entered in the fields
+            sName = Enter_Name.getText().toString();
+            sPassword = Enter_Password.getText().toString();
+            sContact = Enter_ContactNum.getText().toString();
+
+            // Following four functions will evaluate the fields accordingly
+            validateUserName(sName);
+            validateUserPassword(sPassword);
+            validateUserContactNum(sContact);
+        }
 
         // Sum of flags
         flag = flagn + flage + flagp + flagc;
@@ -100,7 +131,7 @@ public class ValidateUserSignupInfo {
     private void validateUserPassword(String sPassword) {
         if (sPassword.isEmpty())
         {
-            Enter_Password.setError("EnterPassword");
+            Enter_Password.setError("Enter Password");
             Enter_Password.setBackgroundResource(R.drawable.edittext_bg_red);
             flagp = 1;
         }

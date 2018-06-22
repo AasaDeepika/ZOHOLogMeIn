@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import static com.example.asha.logmein.GlobalClass.Email;
 
 
 public class SignUpFragment extends Fragment {
@@ -55,21 +56,21 @@ public class SignUpFragment extends Fragment {
         Signup_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                result = uValidate.validate(view, context);
+                result = uValidate.validate(view, context,"Signup");
 
                 if (result) {
                     // If result = TRUE then the user entered the details correctly.
 
                     // Getting the text entered in the fields
                     sName = Enter_Name.getText().toString();
-                    sEmail = Enter_Email.getText().toString();
+                    Email = Enter_Email.getText().toString();
                     sPassword = Enter_Password.getText().toString();
                     sContact = Enter_ContactNum.getText().toString();
 
                     // Insert the user SignUp input into database
                     Contacts c = new Contacts();
                     c.setName(sName);
-                    c.setEmail(sEmail);
+                    c.setEmail(Email);
                     c.setPassword(sPassword);
                     c.setContactNum(sContact);
 
@@ -79,13 +80,14 @@ public class SignUpFragment extends Fragment {
                     Toast.makeText(getActivity(),"Account Created successfully"
                             ,Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getActivity(), WelcomeActivity.class);
-                    intent.putExtra("Email",sEmail);
                     startActivity(intent);
 
                 }
             }
 
         });
+
+
 
         return view;
     }

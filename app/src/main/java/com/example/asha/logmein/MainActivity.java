@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_main);
 
         // Setting the names of two tabs in main activity
-        TabLayout tabLayout = (TabLayout)findViewById(R.id.sliding_tabs);
+        TabLayout tabLayout = findViewById(R.id.sliding_tabs);
         tabLayout.addTab(tabLayout.newTab().setText("LOG IN"));
         tabLayout.addTab(tabLayout.newTab().setText("SIGN UP"));
 

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/home_icon"
+            android:title="@string/home_screen" />
+
+        <item
+            android:id="@+id/nav_edit"
+            android:icon="@drawable/edit_icon"
+            android:title="@string/edit_profile_screen" />
+        <item
+            android:id="@+id/nav_delete"
+            android:icon="@drawable/delete_icon"
+            android:title="@string/delete_account_screen" />
+    </group>
+    <item
+        android:checkable="true"
+        android:id="@+id/nav_signout"
+        android:icon="@drawable/sign_out_icon"
+        android:title="@string/sign_out" />
+</menu>
